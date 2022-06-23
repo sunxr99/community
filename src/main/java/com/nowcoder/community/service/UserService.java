@@ -4,6 +4,7 @@ package com.nowcoder.community.service;
 import com.nowcoder.community.dao.DiscussPostMapper;
 import com.nowcoder.community.dao.UserMapper;
 import com.nowcoder.community.entity.User;
+import com.nowcoder.community.util.CommunityConstant;
 import com.nowcoder.community.util.CommunityUtil;
 import com.nowcoder.community.util.MailClient;
 import org.apache.commons.lang3.StringUtils;
@@ -18,7 +19,7 @@ import java.util.Map;
 import java.util.Random;
 
 @Service
-public class UserService {
+public class UserService implements CommunityConstant {
     @Autowired
     private UserMapper userMapper;
     @Autowired
@@ -27,7 +28,7 @@ public class UserService {
     private TemplateEngine templateEngine;
     @Value("${community.path.domain}")
     private String domain;
-    @Value("$server.servlet.context-path}")
+    @Value("${server.servlet.context-path}")
     private String contextPath;
     public User findUserById(int id)
     {
@@ -76,12 +77,24 @@ public class UserService {
         //发送验证邮件
         Context context= new Context();
         context.setVariable("email",user.getEmail());
+        // http://localhost:8080/community/activation/101code
         String url=domain+contextPath+"/activation/"+user.getId()+"/"+user.getActivationCode();
         context.setVariable("url",url);
         String content=templateEngine.process("/mail/activation",context);
         mailClient.sendMail(user.getEmail(),"激活账号",content);
 
         return map;
-    }
 
+    }
+    public int activation(int userID, String code){
+        User user=userMapper.selectById(userID);
+        if(user.getStatus()==1) {
+            return ACTIVATION_REPEAT;
+        }else if (user.getActivationCode().equals(code)){
+            userMapper.updateStatus(userID,1);
+            return ACTIVATION_SUCESS;
+        }
+        else
+            return ACTIVATION_FAILURE;
+    }
 }
