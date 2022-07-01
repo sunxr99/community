@@ -107,6 +107,7 @@ public class UserController {
         }
     }
     // 修改密码
+    //return+路径就是纯粹用于跳转页面。 而return+redirect就用于再次转向controller-
     @RequestMapping(path = "/updatePassword", method = RequestMethod.POST)
     public String updatePassword(String oldPassword, String newPassword, Model model) {
         User user = hostHolder.getUser();
