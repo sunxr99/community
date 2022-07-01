@@ -18,6 +18,7 @@ public class DiscussPostService {
     @Autowired
     private SensitiveFilter sensitiveFilter;
 
+
     public List<DiscussPost> findDiscussPost(int userid,int offet,int limit)
     {
         return discussPostMapper.selectDiscussPosts(userid,offet,limit);
@@ -43,5 +44,8 @@ public class DiscussPostService {
 
     public DiscussPost findDiscussPostById(int id){
         return discussPostMapper.selectDiscussPostById(id);
+    }
+    public int updateCommentCount(int id, int commentCount) {
+        return discussPostMapper.updateCommentCount(id, commentCount);
     }
 }
