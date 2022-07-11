@@ -4,7 +4,6 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="icon" href="https://static.nowcoder.com/images/logo_87_87.png"/>
-	<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
 	<link rel="stylesheet" th:href="@{/css/global.css}" />
 	<title>牛客网-首页</title>
@@ -72,7 +71,7 @@
 							<a class="nav-link" href="#">最热</a>
 						</li>
 					</ul>
-					<button type="button" class="btn btn-primary btn-sm position-absolute rt-0" data-toggle="modal" th:if="${loginUser!=null}" data-target="#publishModal">我要发布</button>
+					<button type="button" class="btn btn-primary btn-sm position-absolute rt-0" data-toggle="modal" data-target="#publishModal" th:if="${loginUser!=null}">我要发布</button>
 				</div>
 				<!-- 弹出框 -->
 				<div class="modal fade" id="publishModal" tabindex="-1" role="dialog" aria-labelledby="publishModalLabel" aria-hidden="true">
@@ -134,7 +133,7 @@
 								<ul class="d-inline float-right">
 									<li class="d-inline ml-2">赞 <span th:text="${map.likeCount}">11</span></li>
 									<li class="d-inline ml-2">|</li>
-									<li class="d-inline ml-2">回帖 <span th:text="${map.post.commentCount}"></span></span></li>
+									<li class="d-inline ml-2">回帖 <span th:text="${map.post.commentCount}">7</span></li>
 								</ul>
 							</div>
 						</div>						
@@ -149,7 +148,7 @@
 						<li th:class="|page-item ${page.current==1?'disabled':''}|">
 							<a class="page-link" th:href="@{${page.path}(current=${page.current-1})}">上一页</a></li>
 						<li th:class="|page-item ${i==page.current?'active':''}|" th:each="i:${#numbers.sequence(page.from,page.to)}">
-							<a class="page-link" href="#" th:text="${i}">1</a>
+							<a class="page-link" th:href="@{${page.path}(current=${i})}" th:text="${i}">1</a>
 						</li>
 						<li th:class="|page-item ${page.current==page.total?'disabled':''}|">
 							<a class="page-link" th:href="@{${page.path}(current=${page.current+1})}">下一页</a>
@@ -225,7 +224,7 @@
 		</footer>
 	</div>
 
-	<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
 	<script th:src="@{/js/global.js}"></script>
