@@ -58,4 +58,31 @@ public class HomeController {
         model.addAttribute("discussPosts",discussPosts);
         return "/index";
     }
+
+    @RequestMapping(value = "/index/hot", method = RequestMethod.GET)
+    public String getIndexHotPage(Model model, Page page){
+        page.setRows(discussPostService.findDiscussPostRows(0));
+        page.setPath("/index/hot");
+
+        List<DiscussPost> list =  discussPostService.findDiscussHotPost(0,page.getOffset(),page.getLimit());
+        List<Map<String,Object>> discussPosts=new ArrayList<>();
+        if(list!=null)
+        {
+            for (DiscussPost post:list)
+            {
+                Map<String,Object> map=new HashMap<>();
+                map.put("post",post);
+                User user=userService.findUserById(post.getUserId());
+                map.put("user",user);
+
+                long likecount=likeService.findEntityLikeCount(ENTITY_TYPE_POST, post.getId());
+                map.put("likeCount",likecount);
+
+
+                discussPosts.add(map);
+            }
+        }
+        model.addAttribute("discussPosts",discussPosts);
+        return "/index";
+    }
 }

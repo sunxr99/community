@@ -23,6 +23,10 @@ public class DiscussPostService {
     {
         return discussPostMapper.selectDiscussPosts(userid,offet,limit);
     }
+    public List<DiscussPost> findDiscussHotPost(int userid,int offet,int limit)
+    {
+        return discussPostMapper.selectDiscussHotPosts(userid,offet,limit);
+    }
     public int findDiscussPostRows(int userId){
 
         return discussPostMapper.selectDiscussPostRows(userId);

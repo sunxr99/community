@@ -13,6 +13,8 @@ import org.springframework.test.context.ContextConfiguration;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.Queue;
 
 @SpringBootTest
 @ContextConfiguration(classes = CommunityApplication.class)
@@ -53,6 +55,18 @@ class CommunityApplicationTests implements ApplicationContextAware {
 	public void test(){
 		AlphaDaoHibernateImpl alphaDaoHibernate=new AlphaDaoHibernateImpl();
 		System.out.println(alphaDaoHibernate.select());
+	}
+	@Test
+	public  void testQue()
+	{
+		Queue<Integer> queue=new LinkedList<Integer>();
+		queue.add(null);
+		if(queue.isEmpty())
+		{
+			System.out.println("空");
+		}
+
+
 	}
 
 
