@@ -14,6 +14,7 @@ public class LikeService {
     @Autowired
     private RedisTemplate redisTemplate;
     // 点赞
+    //使用redis Set数据结构
     public void like(int userId, int entityType, int entityId, int entityUserId) {
         redisTemplate.execute(new SessionCallback() {
             @Override
@@ -21,9 +22,7 @@ public class LikeService {
                 String entityLikeKey = RedisKeyUtil.getEntityLikeKey(entityType, entityId);
                 String userLikeKey = RedisKeyUtil.getUserLikeKey(entityUserId);
                 boolean isMember = operations.opsForSet().isMember(entityLikeKey, userId);
-
                 operations.multi();
-
                 if (isMember) {
                     operations.opsForSet().remove(entityLikeKey, userId);
                     operations.opsForValue().decrement(userLikeKey);

@@ -3,7 +3,7 @@ package com.nowcoder.community.entity;
 import javax.xml.crypto.Data;
 import java.util.Date;
 
-public class LoginTicket {
+public class  LoginTicket {
     private int id;
     private int userId;
     private String ticket;
